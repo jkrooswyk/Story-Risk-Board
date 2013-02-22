@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color by User Story Board NO NAME REQUIREMENTS</title>
+    <meta name="Name" content="Risk Board - No Name Requirements" />
+    <meta name="Version" content="1.0" />
+    <meta name="Vendor" content="Rally Software" />
+    <meta name="Author" content="Joel K" />
+
+    <!--    This APP REQUIRES a field called RISKLEVEL with 4 thresholds - Low, Medium, High, Critical --> 
+    <!--    this app needs to be modified to support more or different fields.                         -->
+
+    <script type="text/javascript" src="/apps/2.0p5/sdk.js"></script>
+
+    <script type="text/javascript">
+        Rally.onReady(function() {
+
+        var prioritycount = 0;
+        var riskarray =[];
+        var risknumber = 0;
+        var lowthreshold = "Low";
+        var medthreshold = "Medium";
+        var hithreshold = "High";
+        var criticalthreshold = "Critical";
+
+            Ext.define('ColorCodedStoryCard', {
+                extend: 'Rally.ui.cardboard.Card',
+                alias: 'widget.colorcodedstorycard',
+                columnConfig: {
+                    additionalFetchFields: ['Parent', 'RiskLevel']
+                },
+                initComponent: function() {
+                    this.callParent(arguments);
+
+                    //pull risk score
+                    var riskscore = this.getRecord().get("RiskLevel");
+                    
+                    //match risk score to color
+                    var riskcolor = 0;
+                        if (riskscore == lowthreshold) {
+                            riskcolor = 1;
+                        } 
+                        if (riskscore == medthreshold) {
+                            riskcolor = 2;
+                        }
+                        if (riskscore == hithreshold) {
+                            riskcolor = 3;
+                        }
+                        if (riskscore == criticalthreshold) {
+                            riskcolor = 4;
+                        }                     
+                    this.addCls("color" + riskcolor);
+
+                }
+            });
+
+            Ext.define('CustomApp', {
+                extend: 'Rally.app.App',
+                componentCls: 'app',
+
+                launch: function() {
+                    var addNewConfig = {
+                        xtype: 'rallyaddnew',
+                        recordTypes: ['User Story'],
+                        ignoredRequiredFields: ['Name', 'State', 'WorkProduct', 'Project'],
+                        showAddWithDetails: false,
+                        newButtonText: 'Add New Story',
+                        listeners: {
+                            recordadd: this._onRecordAdd,
+                            scope: this
+                        }
+                    };
+
+                    this.addNew = this.add(addNewConfig);
+
+// ADD FILTER BELOW FOR ONLY < COMPLETED
+
+                    var cardBoardConfig = {
+                        xtype: 'rallycardboard',
+                        types: ['User Story'],
+                        attribute: 'RiskLevel',
+                        cardConfig: {
+                                xtype: 'colorcodedstorycard',
+                                showHeaderMenu: true,
+                                editable: true,
+                                fields: ['Parent', 'RiskLevel']                        
+                        }
+                    };
+                    this.cardBoard = this.add(cardBoardConfig);       
+                },
+
+                _onRecordAdd: function() {
+                    this.cardBoard.refresh();
+                },
+
+                
+            });
+
+            Rally.launchApp('CustomApp', {
+                name: 'Risk Board'
+            });
+        });
+    </script>
+
+        <!-- Color chart for below color options (or use #hex values) can be found here:-->
+        <!-- http://www.w3schools.com/html/html_colornames.asp-->
+        
+    <style type="text/css">
+        .app {
+            margin: 20px;
+        }      
+        .color0{
+            background-color: AliceBlue !Important;
+        }
+        .color1{
+            background-color: LightGreen !Important;
+        }
+        .color2{
+            background-color: Gold !Important;
+        }
+        .color3{
+            background-color: Orange !Important;
+        }
+        .color4{
+            background-color: Crimson !Important;
+        }
+        
+        </style>
+  
+</head>
+<body></body>
+</html>
