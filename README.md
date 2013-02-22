@@ -8,4 +8,4 @@ This is a card board for stories that organizes them by risk level.
 - If you change the name of the field or the levels, the app can be easily modified to accomodate
 
 Screenshot:<P>
-![Alt text](https://github.com/jkrooswyk/Story-Risk-Board/raw/master/Risk Board App Screenshot.png)
+![Alt text](https://github.com/jkrooswyk/Story-Risk-Board/raw/master/Risk Board App Screen Shot.png)
