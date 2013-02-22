@@ -1,7 +1,7 @@
 Story-Risk-Board
 ================
 
-This is a card board for stories that organizes them by risk level.
+This is a card board for stories that organizes them by risk level and color-codes the cards by severity.
 
 - THIS APP REQUIRES A CUSTOM FIELD FOR STORIES called RiskLevel
 - RiskLevel is a drop down of Low, Medium, High, Critical
