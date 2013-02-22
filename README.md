@@ -7,5 +7,7 @@ This is a card board for stories that organizes them by risk level and color-cod
 - RiskLevel is a drop down of Low, Medium, High, Critical
 - If you change the name of the field or the levels, the app can be easily modified to accomodate
 
+This board allows you to view risk levels, as well as set them using drag and drop between columns.
+
 Screenshot:<P>
 ![Alt text](https://github.com/jkrooswyk/Story-Risk-Board/raw/master/Risk Board App Screen Shot.png)
